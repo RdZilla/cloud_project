@@ -1,0 +1,39 @@
+volumes:
+  pg_data: { }
+  pgadmin:
+
+services:
+  postgres:
+    container_name: postgres_alert_system
+    image: postgres:15-alpine
+    env_file:
+      - .env
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+      - ./postgresql/init-db:/docker-entrypoint-initdb.d
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+    ports:
+      - "5050:80"
+    restart: unless-stopped
+
+  web:
+    build: .
+    env_file:
+      - .env
+    volumes:
+      - .:/alert_system
+    ports:
+      - '8000:8000'
+    depends_on:
+      - postgres
