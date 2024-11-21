@@ -18,7 +18,7 @@ class EmployeesView(generics.ListCreateAPIView):
         "last_name"
     )
     serializer_class = EmployeesListSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    # permission_classes = [permissions.IsAuthenticated]
 
     @extend_schema(
         tags=["Employee"],
@@ -99,7 +99,7 @@ class EmployeesView(generics.ListCreateAPIView):
 class EmployeeView(generics.RetrieveAPIView):
     queryset = Employee.objects.all()
     serializer_class = EmployeeSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    # permission_classes = [permissions.IsAuthenticated]
 
     @extend_schema(
         tags=["Employee"],

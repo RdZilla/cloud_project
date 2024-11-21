@@ -18,7 +18,7 @@ from organization.models import Employee
 
 class EmployeeHealthReferenceView(generics.GenericAPIView):
     serializer_class = EmployeeHealthReferenceSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    # permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
         employee_id = self.kwargs.get("pk")
@@ -120,7 +120,7 @@ class EmployeeHealthReferenceView(generics.GenericAPIView):
 
 class EmployeeHealthMeasurementView(generics.GenericAPIView):
     serializer_class = EmployeeHealthMeasurementSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    # permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
         employee_id = self.kwargs.get("pk")
@@ -146,7 +146,7 @@ class EmployeeHealthMeasurementView(generics.GenericAPIView):
 
 class EmployeeHealthMeasurementGraphView(generics.GenericAPIView):
     serializer_class = EmployeeHealthMeasurementGraphSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    # permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
         employee_id = self.kwargs.get("pk")

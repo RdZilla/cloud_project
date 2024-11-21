@@ -12,7 +12,7 @@ from organization.models import Employee
 
 class UploadDataView(generics.GenericAPIView):
     serializer_class = UploadDataSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    # permission_classes = [permissions.IsAuthenticated]
 
     @extend_schema(
         tags=["Measurements"],
