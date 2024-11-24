@@ -140,8 +140,7 @@ class EmployeeHealthMeasurementView(generics.GenericAPIView):
     )
     def get(self, request, *args, **kwargs):
         qs = self.get_queryset()
-        serializer = self.serializer_class(qs, many=True)
-        return Response(serializer.data)
+        return qs
 
 
 class EmployeeHealthMeasurementGraphView(generics.GenericAPIView):
