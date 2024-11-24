@@ -38,7 +38,7 @@ class EmployeeHealthReferenceView(generics.GenericAPIView):
     )
     def get(self, request, *args, **kwargs):
         qs = self.get_queryset()
-        serializer = self.serializer_class(qs, many=True)
+        serializer = self.serializer_class(qs)
         return Response(serializer.data)
 
     @extend_schema(
@@ -140,7 +140,8 @@ class EmployeeHealthMeasurementView(generics.GenericAPIView):
     )
     def get(self, request, *args, **kwargs):
         qs = self.get_queryset()
-        return qs
+        serializer = self.serializer_class(qs, many=True)
+        return Response(serializer.data)
 
 
 class EmployeeHealthMeasurementGraphView(generics.GenericAPIView):
