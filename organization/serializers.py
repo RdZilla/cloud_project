@@ -122,6 +122,7 @@ class EmployeeSerializer(serializers.ModelSerializer):
             "gender",
             "phone_number",
             "position",
+            "current_status",
         ]
 
 
