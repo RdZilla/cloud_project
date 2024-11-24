@@ -25,7 +25,7 @@ class EmployeeHealthReferenceView(generics.GenericAPIView):
         get_object_or_404(Employee, pk=employee_id)
         queryset = EmployeeHealthReference.objects.filter(
             employee=employee_id
-        )
+        ).first()
         return queryset
 
     @extend_schema(
@@ -127,7 +127,7 @@ class EmployeeHealthMeasurementView(generics.GenericAPIView):
         get_object_or_404(Employee, pk=employee_id)
         queryset = EmployeeHealthMeasurement.objects.filter(
             employee=employee_id
-        ).order_by("-last_update")[:1]
+        ).order_by("-last_update")[:1].first()
         return queryset
 
     @extend_schema(
@@ -140,7 +140,7 @@ class EmployeeHealthMeasurementView(generics.GenericAPIView):
     )
     def get(self, request, *args, **kwargs):
         qs = self.get_queryset()
-        serializer = self.serializer_class(qs, many=True)
+        serializer = self.serializer_class(qs)
         return Response(serializer.data)
 
 
