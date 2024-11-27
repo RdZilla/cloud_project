@@ -59,8 +59,9 @@ class UploadDataView(generics.GenericAPIView):
             return error
 
         health_measurement_data["employee"] = employee
-
         EmployeeHealthMeasurement.objects.create(**health_measurement_data)
+
+        self.update_employee_health_status(employee, health_measurement_data)
         return Response(status=status.HTTP_201_CREATED)
 
     def validate_input_params(self, health_measurement_data, steps):
@@ -79,3 +80,25 @@ class UploadDataView(generics.GenericAPIView):
         serializer = self.get_serializer(data=health_measurement_data)
         serializer.is_valid(raise_exception=True)
         return None
+
+    @staticmethod
+    def update_employee_health_status(employee, health_measurement_data):
+        statuses_list = []
+        for health_param, health_measure in health_measurement_data.items():
+            health_metric = Employee.medical_metrics.get(health_param)
+            if not health_metric:
+                continue
+            for status, metrics in health_metric.items():
+                for metric in metrics:
+                    if metric[0] <= health_measure <= metric[1]:
+                        statuses_list.append(status)
+
+        new_status = Employee.NORMAL
+        if Employee.UNSTABLE in statuses_list:
+            new_status = Employee.UNSTABLE
+        if Employee.BAD in statuses_list:
+            new_status = Employee.BAD
+
+
+        employee.current_status = new_status
+        employee.save()

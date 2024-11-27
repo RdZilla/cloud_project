@@ -9,14 +9,8 @@ from organization.serializers import EmployeeSerializer, EmployeesListSerializer
 
 
 class EmployeesView(generics.ListCreateAPIView):
-    queryset = Employee.objects.exclude(
-        is_staff=True,
-        is_superuser=True
-    ).order_by(
-        "current_status"
-    ).order_by(
-        "last_name"
-    )
+    queryset = Employee.objects.all()
+
     serializer_class = EmployeesListSerializer
     # permission_classes = [permissions.IsAuthenticated]
 
@@ -39,10 +33,18 @@ class EmployeesView(generics.ListCreateAPIView):
     def get(self, request, *args, **kwargs):
         return super().list(request, *args, **kwargs)
 
+    def get_queryset(self):
+        queryset = Employee.objects.exclude(
+            is_staff=True,
+            is_superuser=True
+        ).order_by(
+            "current_status", "last_name"
+        )
+        return queryset
+
     def filter_queryset(self, queryset):
         search = self.request.query_params.get('search')
         if search:
-
             search_vector = SearchVector(
                 'first_name',
                 'last_name',
