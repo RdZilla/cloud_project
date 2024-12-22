@@ -11,6 +11,7 @@ class EmployeesListSerializer(serializers.Serializer):
     birth_date = serializers.DateField()
     gender = serializers.CharField()
     phone_number = serializers.CharField()
+    department = serializers.CharField()
     position = serializers.CharField()
     current_status = serializers.CharField()
 
@@ -121,6 +122,7 @@ class EmployeeSerializer(serializers.ModelSerializer):
             "birth_date",
             "gender",
             "phone_number",
+            "department",
             "position",
             "current_status",
         ]

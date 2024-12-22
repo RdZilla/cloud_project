@@ -34,12 +34,18 @@ class EmployeesView(generics.ListCreateAPIView):
         return super().list(request, *args, **kwargs)
 
     def get_queryset(self):
+        # user_id = self.request.user.id
+        # user = Employee.objects.get(pk=user_id)
+        # user_department = user.department
         queryset = Employee.objects.exclude(
             is_staff=True,
             is_superuser=True
         ).order_by(
             "current_status", "last_name"
         )
+        # queryset = queryset.filter(
+        #     department=user_department
+        # )
         return queryset
 
     def filter_queryset(self, queryset):
@@ -75,6 +81,7 @@ class EmployeesView(generics.ListCreateAPIView):
                     "gender": "MALE",
                     "current_status": "2_NORMAL",
                     "phone_number": "+7(930) 123-45-67",
+                    "department": "IT",
                     "position": "writer",
                     "username": "erich_remarque",
                     "password": "some_password",

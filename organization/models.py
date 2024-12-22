@@ -58,6 +58,7 @@ class Employee(AbstractUser):
     birth_date = models.DateField(verbose_name="Дата рождения", blank=True, null=True)
     gender = models.CharField(max_length=10, choices=GENDER_CHOICES, verbose_name="Пол")
     phone_number = models.CharField(max_length=20, verbose_name="Номер телефона")
+    department = models.CharField(max_length=150, verbose_name="Отдел", blank=True, null=True)
     position = models.CharField(max_length=150, verbose_name="Должность")
     current_status = models.CharField(max_length=150, verbose_name="Текущий статус", choices=STATUS_CHOICES)
 
